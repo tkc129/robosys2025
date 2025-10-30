@@ -1,11 +1,11 @@
-/home/tkcs129/anaconda3/bin/python3
-# SPDX-FileCopyrightText: 2025 Takashi Iwasaki
-# SPDX-License-Identifier: BSD-3-Clause
+#!/home/tkcs129/anaconda3/bin/python3
+#SPDX-FileCopyrightText: 2025 Takashi Iwasaki
+#SPDX-License-Identifier: BSD-3-Clause
 
 import sys
 
 ans = 0.0
-for lins in sys.stdin
+for lins in sys.stdin:
     ans += float(line)
 
 print(ans)
