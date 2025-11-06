@@ -4,9 +4,12 @@
 
 import sys
 
-ans = 0.0
+ans = 0
 for lins in sys.stdin:
-    ans += float(line)
+    try:
+        ans += int(line)
+    except:
+        ant += float(line)
 
 print(ans)
 
