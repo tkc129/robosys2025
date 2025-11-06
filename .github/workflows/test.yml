@@ -1,0 +1,9 @@
+name: test
+on: pust
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: ALL test
+      run: bash -xv ./test.bash 
