@@ -5,7 +5,7 @@
 import sys
 
 ans = 0
-for lins in sys.stdin:
+for line in sys.stdin:
     try:
         ans += int(line)
     except:
