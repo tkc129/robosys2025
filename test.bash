@@ -9,17 +9,17 @@ ng () {
 
 res=0
 
-out=$(seq 5 | ./plus)
+out=$(seq 5 | python3 plus)
 
 [ "${out}" = 15.0 ] || ng "$LINENO"
 
 
-out=$(echo a | ./plus)
+out=$(echo a | python3 plus)
 
 [ "$?" = 1 ]        || ng "$LINENO"
 [ "${out}" = "" ]   || ng "$LINENO"
 
-out=$(echo | ./plus)
+out=$(echo | python3 plus)
 
 [ "$?" = 1 ]        || ng "$LINENO"
 [ "${out}" = "" ]   || ng "$LINENO"
