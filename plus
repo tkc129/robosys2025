@@ -9,7 +9,7 @@ for line in sys.stdin:
     try:
         ans += int(line)
     except:
-        ant += float(line)
+        ans += float(line)
 
 print(ans)
 
