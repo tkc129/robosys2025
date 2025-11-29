@@ -1,9 +1,19 @@
 name: test
-on: push
+on: [push, pull_request]
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: ALL test
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x' 
+
+    - name: Make plus command executable
+      run: chmod +x plus
+      
+    - name: Run ALL test
       run: bash -xv ./test.bash
