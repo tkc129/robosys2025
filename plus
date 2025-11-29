@@ -4,12 +4,37 @@
 
 import sys
 
-ans = 0
-for line in sys.stdin:
-    try:
-        ans += int(line)
-    except:
-        ans += float(line)
+def main():
+    data = sys.stdin.read().strip()
 
-print(ans)
+    if not data:
+        print("Error: no input", file=sys.stderr)
+        sys.exit(1)
+
+    tokens = data.replace("\n", " ").split()
+    numbers = []
+
+    for token in tokens:
+        try:
+            value = float(token)
+            numbers.append(value)
+        except ValueError:
+            print(f"Error: invalid token '{token}' detected", file=sys.stderr)
+            sys.exit(1)
+
+    count = len(numbers)
+    sum_value = sum(numbers)
+    avg = sum_value / count
+    max_value = max(numbers)
+    min_value = min(numbers)
+
+    # avgは常に小数点以下2桁
+    print(f"count: {count}")
+    print(f"sum: {sum_value}")
+    print(f"avg: {avg:.2f}")
+    print(f"max: {max_value}")
+    print(f"min: {min_value}")
+
+if __name__ == "__main__":
+    main()
 
