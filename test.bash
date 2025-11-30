@@ -8,7 +8,7 @@ ng () {
 }
 
 res=0
-COMMAND="./plus"
+COMMAND="./stats"
 
 OUT=$(seq 5 | "$COMMAND" | tr '\n' ' ')
 EXPECTED_1="count: 5 sum: 15.0 avg: 3.00 max: 5.0 min: 1.0 " 
