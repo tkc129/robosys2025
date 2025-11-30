@@ -17,7 +17,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
 
     - name: Make plus command executable
-      run: chmod +x plus
+      run: chmod +x stats
 
     - name: Run ALL test
       run: bash -xv ./test.bash
