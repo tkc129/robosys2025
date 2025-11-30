@@ -1,8 +1,30 @@
 # robosys2025
-ロボットシステム学課題１
+ロボットシステム学の課題用ファイルをまとめたリポジトリです。
 
-- このソフトウェアパッケージは，3条項BSDライセンスの下，再頒布および使用が許可されます．
-- このパッケージのコードは，下記のスライド（CC-BY-SA 4.0 by Ryuichi Ueda）のものを，本人の許可を得て自身の著作としたもの
-です．
-    - [ryuichiueda/my_slides robosys_2025](https://github.com/ryuichiueda/slides_marp/tree/master/robosys2025)
+## 概要
+任意に入力した数字の個数（count）合計(sum)、平均(avg)、最大値(max)、最小値(min)を計算して、標準出力するコマンドです。
+
+## 実行環境
+以下の環境、ソフトウェアにおいてプログラムの実行及びテストを確認しています。
+- python 3.8 ~ 3.12
+
+## 実行方法
+"git"コマンドを使用してリポジトリをクローンします。
+```
+$ git clone https://github.com/tkc129/robosys2025.git
+```
+robosys2025に移動し実行できます。
+```
+$ cd robosys2025
+```
+```
+$ echo "3 5 7 11" | ./plus
+count: 4 sum: 26.0 avg: 6.50 max: 11.0 min: 3.0
+```
+
+## テスト環境
+- Ubuntu 22.04.5 LTS
+
+
+- このソフトウェアパッケージは，3条項BSDライセンスの下，再頒布および使用が許可されます。
 - © 2025 Takashi Iwasaki
