@@ -33,9 +33,8 @@ def main():
         f"sum: {sum_value:.1f} "
         f"avg: {avg:.2f} "
         f"max: {max_value:.1f} "
-        f"min: {min_value:.1f}"
+        f"min: {min_value:.1f} "
     )
 
 if __name__ == "__main__":
     main()
-
