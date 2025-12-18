@@ -42,7 +42,7 @@ def main():
             monthly = daily * days
             yearly = monthly * 12
 
-            # 税金計算 (お送りいただいた表に基づく)
+            # 税金計算
             income_tax_rate = get_income_tax_rate(yearly)
             resident_tax_rate = 0.10  # 住民税一律10%
             total_tax_rate = income_tax_rate + resident_tax_rate
