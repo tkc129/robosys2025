@@ -3,35 +3,29 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
 ng () {
-    echo "NG: ${1}line wrong"
+    echo "NG: ${1} line wrong"
     res=1
 }
 
 res=0
-COMMAND="./stats"
+COMMAND="./calcwage"
 
-OUT=$(seq 5 | "$COMMAND" | tr '\n' ' ')
-EXPECTED_1="count: 5 sum: 15.0 avg: 3.00 max: 5.0 min: 1.0 "
-[[ "${OUT}" == "${EXPECTED_1}" ]] || ng "$LINENO"
+# テスト1: 正常な入力
+OUT=$(echo "1000 8 20" | "$COMMAND")
+EXPECTED="Input: 1000円/h, 8.0h/日, 20.0日/月 -> 日給: 8000円, 月給: 160,000円, 年収: 1,920,000円"
+[ "${OUT}" = "${EXPECTED}" ] || ng "$LINENO"
 
-OUT=$(printf "1\n2\n3.5\n" | "$COMMAND" | tr '\n' ' ')
-EXPECTED_2="count: 3 sum: 6.5 avg: 2.17 max: 3.5 min: 1.0 "
-[[ "${OUT}" == "${EXPECTED_2}" ]] || ng "$LINENO"
-
-
-OUT=$(echo a | "$COMMAND" 2> /dev/null)
+# テスト2: 値が足りない場合 (エラー終了すべき)
+echo "1000 8" | "$COMMAND" 2> /dev/null
 [ "$?" = 1 ] || ng "$LINENO"
-[ "${OUT}" = "" ] || ng "$LINENO"
 
-OUT=$(echo "" | "$COMMAND" 2> /dev/null)
-[ "$?" = 1 ]      || ng "$LINENO"
-[ "${OUT}" = "" ] || ng "$LINENO"
+# テスト3: 数値以外が含まれる場合
+echo "1000 8 abc" | "$COMMAND" 2> /dev/null
+[ "$?" = 1 ] || ng "$LINENO"
 
-OUT=$(seq 1000 | "$COMMAND" | tr '\n' ' ')
-EXPECTED_5="count: 1000 sum: 500500.0 avg: 500.50 max: 1000.0 min: 1.0 "
-[[ "${OUT}" == "${EXPECTED_5}" ]] || ng "$LINENO"
-
+# テスト4: 空入力
+echo -n "" | "$COMMAND" 2> /dev/null
+[ "$?" = 1 ] || ng "$LINENO"
 
 [ "${res}" = 0 ] && echo "--- All Tests Passed: OK ---"
 exit $res
-
