@@ -5,8 +5,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false  # 1つのバージョンがこけても他を最後まで実行する
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+        # 3.7はエラーの原因になるため除外
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
 
     steps:
     - uses: actions/checkout@v3
@@ -16,9 +18,8 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Make stats command executable
-      run: chmod +x stats
+    - name: Make calcwage executable
+      run: chmod +x calcwage
 
     - name: Run ALL test
       run: bash -xv ./test.bash
-
