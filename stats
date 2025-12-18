@@ -1,41 +1,47 @@
 #!/usr/bin/python3
-#SPDX-FileCopyrightText: 2025 Takashi Iwasaki
-#SPDX-License-Identifier: BSD-3-Clause
+# SPDX-FileCopyrightText: 2025 Takashi Iwasaki
+# SPDX-License-Identifier: BSD-3-Clause
 
 import sys
 
 def main():
-    data = sys.stdin.read().strip()
-
-    if not data:
-        print("Error: no input", file=sys.stderr)
-        sys.exit(1)
-
-    tokens = data.replace("\n", " ").split()
-    numbers = []
-
-    for token in tokens:
-        try:
-            value = float(token)
-            numbers.append(value)
-        except ValueError:
-            print(f"Error: invalid token '{token}' detected", file=sys.stderr)
+    # 1行を1データセットとして処理
+    for line in sys.stdin:
+        line = line.strip()
+        if not line:
+            continue
+            
+        tokens = line.split()
+        if len(tokens) != 3:
+            print(f"Error: Invalid input format '{line}'. Expected: [Hourly] [Hours/Day] [Days/Month]", file=sys.stderr)
             sys.exit(1)
 
-    count = len(numbers)
-    sum_value = sum(numbers)
-    avg = sum_value / count
-    max_value = max(numbers)
-    min_value = min(numbers)
+        try:
+            hourly = float(tokens[0])
+            hours_per_day = float(tokens[1])
+            days_per_month = float(tokens[2])
 
-    print(
-        f"count: {count} "
-        f"sum: {sum_value:.1f} "
-        f"avg: {avg:.2f} "
-        f"max: {max_value:.1f} "
-        f"min: {min_value:.1f}"
-)
+            if any(v < 0 for v in [hourly, hours_per_day, days_per_month]):
+                print("Error: Negative values are not allowed", file=sys.stderr)
+                sys.exit(1)
 
+            # 計算ロジック
+            daily = hourly * hours_per_day
+            monthly = daily * days_per_month
+            yearly = monthly * 12
+
+            # 結果を出力
+            print(f"Input: {hourly:.0f}円/h, {hours_per_day}h/日, {days_per_month}日/月 -> "
+                  f"日給: {daily:.0f}円, 月給: {monthly:,.0f}円, 年収: {yearly:,.0f}円")
+
+        except ValueError:
+            print(f"Error: Non-numeric value detected in '{line}'", file=sys.stderr)
+            sys.exit(1)
+
+    # 入力が一度も正常に処理されなかった場合
+    if 'hourly' not in locals():
+        print("Error: no input", file=sys.stderr)
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
