@@ -22,15 +22,10 @@ def main():
             days_per_month = float(tokens[2])
             has_input = True
 
-            if any(v < 0 for v in [hourly, hours_per_day, days_per_month]):
-                print("Error: Negative values are not allowed", file=sys.stderr)
-                sys.exit(1)
-
             daily = hourly * hours_per_day
             monthly = daily * days_per_month
             yearly = monthly * 12
 
-            # テストが通りやすいよう、余計な空白を排除したフォーマット
             print(f"Input: {hourly:.0f}円/h, {hours_per_day}h/日, {days_per_month}日/月 -> "
                   f"日給: {daily:.0f}円, 月給: {monthly:,.0f}円, 年収: {yearly:,.0f}円")
 
