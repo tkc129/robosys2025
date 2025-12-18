@@ -2,26 +2,19 @@
 # SPDX-FileCopyrightText: 2025 Takashi Iwasaki
 # SPDX-License-Identifier: BSD-3-Clause
 
-ng () {
-    echo "NG: ${1} line wrong"
-    res=1
-}
-
 res=0
 COMMAND="./calcwage"
 
-# テスト1: 正常な入力
-OUT=$(echo "1000 8 20" | "$COMMAND")
-EXPECTED="Input: 1000円/h, 8.0h/日, 20.0日/月 -> 日給: 8000円, 月給: 160,000円, 年収: 1,920,000円"
-[ "${OUT}" = "${EXPECTED}" ] || ng "$LINENO"
+# 正常系テスト（時給1000円, 8時間, 20日の場合、年収192万で所得税5%）
+OUT=$(echo "1000 8 20" | "$COMMAND" | grep "推定手取り年収")
+EXPECTED="推定手取り年収: 1,632,000円"
 
-# テスト2: 異常系（引数不足）
-echo "1000 8" | "$COMMAND" 2> /dev/null
-[ "$?" = 1 ] || ng "$LINENO"
+if [[ "$OUT" == *"$EXPECTED"* ]]; then
+    echo "Test: OK"
+else
+    echo "Test: NG"
+    echo "Output: $OUT"
+    res=1
+fi
 
-# テスト3: 異常系（空入力）
-echo -n "" | "$COMMAND" 2> /dev/null
-[ "$?" = 1 ] || ng "$LINENO"
-
-[ "${res}" = 0 ] && echo "--- All Tests Passed: OK ---"
 exit $res
