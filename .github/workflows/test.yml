@@ -5,9 +5,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false  # 1つのバージョンがこけても他を最後まで実行する
+      fail-fast: false
       matrix:
-        # 3.7はエラーの原因になるため除外
         python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
 
     steps:
