@@ -5,7 +5,7 @@
 import sys
 
 def main():
-    # 1行を1データセットとして処理
+    has_input = False
     for line in sys.stdin:
         line = line.strip()
         if not line:
@@ -13,33 +13,32 @@ def main():
             
         tokens = line.split()
         if len(tokens) != 3:
-            print(f"Error: Invalid input format '{line}'. Expected: [Hourly] [Hours/Day] [Days/Month]", file=sys.stderr)
+            print(f"Error: Invalid input '{line}'. Expected: [Wage] [Hours] [Days]", file=sys.stderr)
             sys.exit(1)
 
         try:
             hourly = float(tokens[0])
             hours_per_day = float(tokens[1])
             days_per_month = float(tokens[2])
+            has_input = True
 
             if any(v < 0 for v in [hourly, hours_per_day, days_per_month]):
                 print("Error: Negative values are not allowed", file=sys.stderr)
                 sys.exit(1)
 
-            # 計算ロジック
             daily = hourly * hours_per_day
             monthly = daily * days_per_month
             yearly = monthly * 12
 
-            # 結果を出力
+            # テストが通りやすいよう、余計な空白を排除したフォーマット
             print(f"Input: {hourly:.0f}円/h, {hours_per_day}h/日, {days_per_month}日/月 -> "
                   f"日給: {daily:.0f}円, 月給: {monthly:,.0f}円, 年収: {yearly:,.0f}円")
 
         except ValueError:
-            print(f"Error: Non-numeric value detected in '{line}'", file=sys.stderr)
+            print(f"Error: Non-numeric value in '{line}'", file=sys.stderr)
             sys.exit(1)
 
-    # 入力が一度も正常に処理されなかった場合
-    if 'hourly' not in locals():
+    if not has_input:
         print("Error: no input", file=sys.stderr)
         sys.exit(1)
 
