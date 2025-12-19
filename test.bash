@@ -62,9 +62,22 @@ echo "${OUT}" | grep -q "年収" || ng "$LINENO"
 OUT=$(printf "1000\t8\t20\n" | "$COMMAND")
 echo "${OUT}" | grep -q "額面給与:" || ng "$LINENO"
 
-# 14:
+# 14
 OUT=$(echo "  1000 8 20  " | "$COMMAND")
 echo "${OUT}" | grep -q "額面給与:" || ng "$LINENO"
+
+# 15
+OUT=$(echo "1000 5 20" | "$COMMAND")
+echo "${OUT}" | grep -q "適用税率: 所得税 0% + 住民税 0% (計 0%)" || ng "$LINENO"
+echo "${OUT}" | grep -q "推定手取り年収: 1,200,000円" || ng "$LINENO"
+
+# 16
+OUT=$(echo "1100 5 20" | "$COMMAND")
+echo "${OUT}" | grep -q "適用税率: 所得税 0% + 住民税 0% (計 0%)" || ng "$LINENO"
+
+# 17
+OUT=$(echo "1200 5 20" | "$COMMAND")
+echo "${OUT}" | grep -q "適用税率: 所得税 5% + 住民税 10% (計 15%)" || ng "$LINENO"
 
 [ "${res}" = 0 ] && echo "--- All Tests Passed: OK ---"
 exit $res
