@@ -46,6 +46,17 @@ OUT=$(printf "1000 8 20\n1000 a 20\n" | "$COMMAND" 2> /dev/null)
 OUT=$(echo "1000.5 8 20" | "$COMMAND")
 echo "${OUT}" | grep -q "額面給与:" || ng "$LINENO"
 
+# 10
+OUT=$(echo "0 8 20" | "$COMMAND")
+echo "${OUT}" | grep -q "0円" || ng "$LINENO"
+
+# 11
+OUT=$(echo "1000000 8 20" | "$COMMAND")
+echo "${OUT}" | grep -q "192,000,000円" || ng "$LINENO"
+
+# 12
+echo "-1000 8 20" | "$COMMAND" 2> /dev/null
+[ "$?" = 1 ] || ng "$LINENO"
 
 [ "${res}" = 0 ] && echo "--- All Tests Passed: OK ---"
 exit $res
