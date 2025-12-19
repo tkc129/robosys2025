@@ -5,8 +5,10 @@
 import sys
 
 def get_income_tax_rate(yearly_income):
-    """年収に応じた所得税率を返す"""
-    if yearly_income <= 1950000:
+    """年収に応じた所得税率を返す (123万以下は非課税)"""
+    if yearly_income <= 1230000:
+        return 0.0
+    elif yearly_income <= 1950000:
         return 0.05
     elif yearly_income <= 3300000:
         return 0.10
@@ -41,12 +43,15 @@ def main():
             monthly = daily * days
             yearly = monthly * 12
 
-            # 税金
             income_tax_rate = get_income_tax_rate(yearly)
-            resident_tax_rate = 0.10  # 住民税一律10%
-            total_tax_rate = income_tax_rate + resident_tax_rate
             
-            # 手取り
+            if yearly <= 1350000:
+                resident_tax_rate = 0.0
+            else:
+                resident_tax_rate = 0.10
+
+            total_tax_rate = income_tax_rate + resident_tax_rate
+        
             net_yearly = yearly * (1 - total_tax_rate)
 
             print(f"額面給与: 日給 {daily:,.0f}円 / 月給 {monthly:,.0f}円 / 年収 {yearly:,.0f}円")
@@ -63,4 +68,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
