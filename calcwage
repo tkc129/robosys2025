@@ -37,21 +37,18 @@ def main():
             days = float(tokens[2])
             has_input = True
 
-            # 基本計算
             daily = hourly * hours
             monthly = daily * days
             yearly = monthly * 12
 
-            # 税金計算
+            # 税金
             income_tax_rate = get_income_tax_rate(yearly)
             resident_tax_rate = 0.10  # 住民税一律10%
             total_tax_rate = income_tax_rate + resident_tax_rate
             
-            # 手取り計算
+            # 手取り
             net_yearly = yearly * (1 - total_tax_rate)
 
-            # 出力
-            print(f"--- 試算結果 ---")
             print(f"入力条件: {hourly:.0f}円/h, {hours}h/日, {days}日/月")
             print(f"額面給与: 日給 {daily:,.0f}円 / 月給 {monthly:,.0f}円 / 年収 {yearly:,.0f}円")
             print(f"適用税率: 所得税 {income_tax_rate*100:.0f}% + 住民税 {resident_tax_rate*100:.0f}% (計 {total_tax_rate*100:.0f}%)")
@@ -67,3 +64,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
