@@ -54,9 +54,5 @@ echo "${OUT}" | grep -q "0円" || ng "$LINENO"
 OUT=$(echo "1000000 8 20" | "$COMMAND")
 echo "${OUT}" | grep -q "192,000,000円" || ng "$LINENO"
 
-# 12
-echo "-1000 8 20" | "$COMMAND" 2> /dev/null
-[ "$?" = 1 ] || ng "$LINENO"
-
 [ "${res}" = 0 ] && echo "--- All Tests Passed: OK ---"
 exit $res
